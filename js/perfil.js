@@ -1,11 +1,8 @@
-import { getCliente, getClientes, deleteCliente, putCliente } from './exports.js'
+import { getCliente, getClientes, deleteCliente, putCliente, getAnimal, deleteAnimal, getAnimais, postAnimal, putAnimal, getTipos, getRaca ,getPortes,postarNovoCliente} from './exports.js'
 
 'use strict'
 
-//Pega o id fornecido pelo login pra dps usar ele em confirmacoes
-const idPerfil = 2
-
-// const idPerfil = localStorage.getItem('idusuario')
+const idPerfil = localStorage.getItem('idUsuario')
 if (!idPerfil) {
   window.location.href = '../index.html'
 }
@@ -158,6 +155,12 @@ function editarPerfil(){
     numero.disabled = false;
     salvar=false
   }
+  async function preencherContainer() {
+    const info = await getCliente(idPerfil)
+    console.log(info);
+    document.getElementById('nomeUser').textContent = info.nome
+}
+preencherContainer()
 // }
 
 

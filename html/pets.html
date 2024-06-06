@@ -31,7 +31,7 @@
     <main class="flex items-center justify-center flex-row w-full gap-10 ">
         <aside
             class="gap-3 flex flex-col items-center self-stretch px-14 py-9 w-2/6 text-3xl text-center bg-[#FFD274] text-zinc-900">
-            <p class="font-extrabold">Matheus Noronha</p>
+            <p class="font-extrabold" id="nomeUser"></p>
             <hr class=" self-stretch bg-[#86A7FC] border-[#86A7FC] border-solid border-2">
             <a href="./pedidos.html" class="mt-5">Meus pedidos</a>
             <a href="./perfil.html" class="">Dados da conta</a>
@@ -82,9 +82,7 @@
                         <div class="border-[#86A7FC] border-solid border-2 rounded-lg">
                             <h2 class="font-extrabold">Porte</h2>
                             <select name="porte" id="novoPorte">
-                                <option value="pequeno">Pequeno</option>
-                                <option value="medio">Médio</option>
-                                <option value="grande">Grande</option>
+                                <option value="">Selecione:</option>
                             </select>
                         </div>
                         <div class="border-[#86A7FC] border-solid border-2 rounded-lg">
@@ -96,11 +94,15 @@
                             <input type="date" id="novaDataNascimento" placeholder="Ex: 10/10/2000">
                         </div>
                         <div class="border-[#86A7FC] border-solid border-2 rounded-lg">
+                            <h2 class="font-extrabold">Tipo</h2>
+                            <select name="raca" id="novoTipo">
+                                <option value="0">Selecione:</option>
+                            </select>
+                        </div>
+                        <div class="border-[#86A7FC] border-solid border-2 rounded-lg">
                             <h2 class="font-extrabold">Raça</h2>
                             <select name="raca" id="novaRaca">
-                                <option value="pequeno">Pequeno</option>
-                                <option value="medio">Médio</option>
-                                <option value="grande">Grande</option>
+                                <option value="0">SRD</option>
                             </select>
                         </div>
                     </div>
@@ -108,7 +110,7 @@
                     <div class="flex flex-col justify-center items-center">
                         <div class=" px-8 py-8 bg-[#FFD274] rounded-full border-solid border-[3px] border-violet-950">
                             <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/a764a351cf3ab2f679cf4a6d28154165f9718c2e729595fddf57818106c6f124?apiKey=5f9a157d72c049aa98235468a977c951&"
-                                alt="Imagem do pet" />
+                                alt="Imagem do pet" id="novafotoPetImg"/>
                                 <input type="text" placeholder="Link da foto do pet" id="novaFotoPet">
                         </div>
                         <button id="btn_mandarInfo"

@@ -7,24 +7,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap" rel="stylesheet">
+    <script src="./js/landing.js" type="module"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Laika</title>
 </head>
 
 <body class="h-full w-full bg-[#FFDD95]">
-    <header class="bg-[#FFD274] h-32 flex flex-row items-center justify-around">
-        <img class="w-16 h-16" src="./img/logo.png" alt="">
-        <div class="w-3/5 flex justify-center">
-            <input type="search"
-                class="p-2 rounded-full border-2 border-[#86A7FC] bg-lupa bg-no-repeat bg-[#FFDD95] w-4/5"
-                id="navegar" placeholder="O que seu pet precisa?" />
+    <header class="bg-[#FFD274] h-32 flex flex-row items-center justify-center w-full">
+        <div class="w-[90%] flex justify-between">
+            <img class="w-16 h-16" src="./img/logo.png" alt="">
+            <div class="flex flex-row items-center justify-between w-1/5">
+                <div class="flex gap-10" id="">
+                    <a href="./">Entrar</a>
+                    <p> | </p>
+                    <a href="./">Cadastrar</a>
+                </div>
+                <img src="./img/usuario.png" alt="">
+            </div>
         </div>
-        <div class="flex flex-row items-center justify-between w-1/5">
-            <a href="./">Entrar</a>
-            <p> | </p>
-            <a href="./">Cadastrar</a>
-            <img src="./img/usuario.png" alt="">
-        </div>
+
     </header>
     <hr class="border-2 border-[#2A00A8]">
     <main class="">

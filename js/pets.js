@@ -3,9 +3,8 @@ import { getCliente, getClientes, deleteCliente, putCliente, getAnimal, deleteAn
 'use strict'
 
 //o de cadastrar ta tinindo(falta só arrumar o bglh de porte, raca e tipo), o de aparecer tds os pets precisa de uma alteração no back pra funcionar tinindo, falta o de editar
-const idPerfil = 2
 
-// const idPerfil = localStorage.getItem('idusuario')
+const idPerfil = localStorage.getItem('idUsuario')
 if (!idPerfil) {
     window.location.href = '../index.html'
 }
@@ -24,6 +23,48 @@ btn_cadastrar.addEventListener('click', () => {
 )
 const criar=document.getElementById('btn_mandarInfo')
 criar.addEventListener('click', cadastrarPet)
+
+
+document.addEventListener('DOMContentLoaded', async (event) => {
+    const categoriaSelect = document.getElementById('novoTipo');
+    const data=await getTipos()
+    console.log(data);
+    data.forEach(categoria => {
+        const option = document.createElement('option');
+        option.value = categoria.id;
+        option.textContent = categoria.nome;
+        categoriaSelect.appendChild(option);
+});
+
+document.getElementById('novoTipo').addEventListener('change', async function() {
+const categoriaId = this.value;
+const subcategoriaSelect = document.getElementById('novaRaca');
+subcategoriaSelect.innerHTML = '<option value=""></option>';
+
+if (categoriaId) {
+        const data=await getRaca(categoriaId)
+            data.forEach(subcategoria => {
+                const option = document.createElement('option');
+                option.value = subcategoria.id;
+                option.textContent = subcategoria.nome;
+                subcategoriaSelect.appendChild(option);
+            });
+}
+});
+});
+
+document.addEventListener('DOMContentLoaded', async (event) => {
+    const porteSelect = document.getElementById('novoPorte');
+    const data=await getPortes()
+    console.log(data);
+    data.forEach(categoria => {
+        const option = document.createElement('option');
+        option.value = categoria.id;
+        option.textContent = categoria.nome;
+        porteSelect.appendChild(option);
+});
+});
+
 async function cadastrarPet() {
 
     let nome = document.getElementById('novoNome').value
@@ -33,8 +74,9 @@ async function cadastrarPet() {
     let raca = document.getElementById('novaRaca').value
 const img=document.getElementById('novaFotoPet').value
 
-// || porte == '' || peso == '' || dataNascimento == '' || raca == ''
-    if (nome == '' ) {
+if (nome == '' || porte == '' || peso == '' || dataNascimento == '' || raca == ''|| img==''||
+nome == null || porte == null || peso == '' || dataNascimento == null || raca == null|| img==null||
+nome == undefined || porte == undefined || peso == undefined || dataNascimento == undefined || raca == undefined|| img==undefined) {
         alert('Preencha todos os campos')
     }
     else {
@@ -44,8 +86,8 @@ const img=document.getElementById('novaFotoPet').value
             peso: peso,
             img: img,
             dono_id: idPerfil,
-            porte_id: 1,
-            raca_id: 1
+            porte_id: Number(porte),
+            raca_id: Number(raca)
         }
 
         try {
@@ -132,6 +174,8 @@ if (dados.raca) {
 async function preencherContainer() {
     const container = document.querySelector('main')
     const info = await getCliente(idPerfil)
+    console.log(info);
+    document.getElementById('nomeUser').textContent = info.nome
     const infoAnimal = info.animais
     infoAnimal.forEach(dado => {
         const main = criarCard(dado)
@@ -140,27 +184,9 @@ async function preencherContainer() {
 }
 preencherContainer()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 async function abrirCardAnimal(idBixo) {
     telaEditar.classList.remove('hidden')
     telaNormal.classList.add('hidden')
-    
 
 const animalAntigo = await getAnimal(idBixo)
 console.log(animalAntigo);
@@ -250,7 +276,7 @@ editar.addEventListener('click', async ()=>{
       let status = await putAnimal(novosDados, idBixo)
             
       if (status) {
-        alert('Dados Atualizados com sucesso')
+        // alert('Dados Atualizados com sucesso')
         // telaEditar.classList.remove('hidden')
         // telaNormal.classList.add('hidden')
         // window.location.href = './pets.html'
@@ -269,9 +295,9 @@ editar.addEventListener('click', async ()=>{
 
 const btn_excluir = document.getElementById('btn_excluir')
 btn_excluir.addEventListener('click', async function () {
-  var confirmado = confirm(`Deseja deletar pet ${nomeAtualizado}?`);
+  var confirmado = confirm(`Deseja deletar pet ${nome.value}?`);
   if (confirmado) {
-    var certezaDeConfirmacao = confirm(`Tem certeza de que deseja deletar o pet ${nomeAtualizado}? essa alteração é irreversivel`);
+    var certezaDeConfirmacao = confirm(`Tem certeza de que deseja deletar o pet ${nome.value}? essa alteração é irreversivel`);
     if (certezaDeConfirmacao) {
       deleteAnimal(idBixo)
       window.location.reload();

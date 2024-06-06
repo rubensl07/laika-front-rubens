@@ -279,3 +279,14 @@ export async function getRaca(id) {
 
     return data.dados
 }
+
+
+export async function getPortes() {
+    const link = `${url}/${versao}/laika/portes`
+    const response=await fetch(link)
+    const data=await response.json()
+    
+    return data.dados
+
+
+}

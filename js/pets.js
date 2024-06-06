@@ -1,4 +1,4 @@
-import { getCliente, getClientes, deleteCliente, putCliente, getAnimal, deleteAnimal, getAnimais, postAnimal, putAnimal, getTipos, getRaca } from './exports.js'
+import { getCliente, getClientes, deleteCliente, putCliente, getAnimal, deleteAnimal, getAnimais, postAnimal, putAnimal, getTipos, getRaca ,getPortes} from './exports.js'
 
 'use strict'
 
@@ -31,6 +31,7 @@ async function cadastrarPet() {
     let peso = document.getElementById('novoPeso').value
     let dataNascimento = document.getElementById('novaDataNascimento').value
     let raca = document.getElementById('novaRaca').value
+const img=document.getElementById('novaFotoPet').value
 
 // || porte == '' || peso == '' || dataNascimento == '' || raca == ''
     if (nome == '' ) {
@@ -41,7 +42,7 @@ async function cadastrarPet() {
             nome: nome,
             nascimento: dataNascimento,
             peso: peso,
-            img: null,
+            img: img,
             dono_id: idPerfil,
             porte_id: 1,
             raca_id: 1
@@ -71,7 +72,7 @@ const anoAtual = today.getFullYear();
 function criarCard(dados) {
 console.log('criarCard');
     const card = document.createElement('div')
-    card.classList.add('flex', 'flex-col', 'items-center', 'bg-white', 'p-1.5', 'w-52', 'h-60', 'rounded-xl')
+    card.classList.add('flex', 'flex-col', 'items-center', 'bg-white', 'p-1.5', 'w-52', 'h-68', 'rounded-xl')
     card.addEventListener('click', () => {
         console.log('entrei');
         abrirCardAnimal(dados.id)
@@ -79,11 +80,11 @@ console.log('criarCard');
 
     const iconeAnimal = document.createElement('img')
     iconeAnimal.src = dados.tipo.icon
-    iconeAnimal.classList.add('self-end')
+    iconeAnimal.classList.add('self-end','w-[32px]')
 
     const ImagemAnimal = document.createElement('img')
     ImagemAnimal.src = dados.img
-    ImagemAnimal.classList.add('self-center', 'rounded-full')
+    ImagemAnimal.classList.add('self-center', 'rounded-full','w-32','h-32')
 
 
     const nomeAnimal = document.createElement('h2')
@@ -104,7 +105,7 @@ if (dados.raca) {
     racaAnimal.classList.add('self-center')
 
     const linha = document.createElement('hr')
-    linha.classList.add('border-4', 'border-solid', 'bg-violet-950', 'border-violet-950', 'w-[80%]')
+    linha.classList.add('border-2', 'border-solid', 'bg-violet-950', 'border-violet-950', 'w-[80%]')
 
 
     const divIdadePeso = document.createElement('div')
@@ -164,6 +165,11 @@ async function abrirCardAnimal(idBixo) {
 const animalAntigo = await getAnimal(idBixo)
 console.log(animalAntigo);
 
+const imgLink=document.getElementById('imgEditadaLink')
+imgLink.value=animalAntigo.img
+const img=document.getElementById('imgEditada')
+img.src=imgLink.value
+
 const textoMeusPets=document.getElementById('meusPets')
 textoMeusPets.classList.add('hidden')
 const iconEditar=document.getElementById('iconEditar')
@@ -176,37 +182,43 @@ const dataNascimento = document.getElementById('editarData')
 dataNascimento.value = animalAntigo.nascimento.substring(0, 10)
 console.log(dataNascimento.value);
 
-const porte = document.getElementById('editarPorte')
-porte.value = animalAntigo.porte.nome
+const porteSelect = document.getElementById('editarPorte');
 
-const categoriaId = animalAntigo.tipo.id;
-const subcategoriaSelect = document.getElementById('editarRaca');
 
-if (categoriaId) {
-
-        const data=await getRaca(categoriaId)
-            data.forEach(subcategoria => {
+        const data=await getPortes()
+            data.forEach(dado => {
                 const option = document.createElement('option');
-                option.value = subcategoria.id;
-                option.textContent = subcategoria.nome;
-                subcategoriaSelect.appendChild(option);
+                option.value = dado.id;
+                option.textContent = dado.nome;
+                porteSelect.appendChild(option);
+            });
+
+
+
+const porte = document.getElementById('editarPorte')
+porte.value = animalAntigo.porte.id
+
+const tipoId = animalAntigo.tipo.id;
+const racaSelect = document.getElementById('editarRaca');
+
+if (tipoId) {
+
+        const data=await getRaca(tipoId)
+            data.forEach(dado => {
+                const option = document.createElement('option');
+                option.value = dado.id;
+                option.textContent = dado.nome;
+                racaSelect.appendChild(option);
             });
 
 }
-
-// for (var i = 0; i < selectElement.options.length; i++) {
-//     if (selectElement.options[i].value === subcategoria.nome) {
-//         selectElement.selectedIndex = i;
-//         break;
-//     }
-// }
 
 
 const raca = document.getElementById('editarRaca')
 if (animalAntigo.raca) {
     raca.value = animalAntigo.raca.id
 } else {
-    raca.value='SRD'
+    raca.value='0'
 }
 
 const peso = document.getElementById('editarPeso')
@@ -214,18 +226,21 @@ peso.value = animalAntigo.peso
 
 const editar = document.getElementById('btn_confirmar')
 editar.addEventListener('click', async ()=>{
+
+    const imgLink=document.getElementById('imgEditadaLink').value
+
     const nomeAtualizado = document.getElementById('nomeEditado').value
     const nascimentoAtualizado = document.getElementById('editarData').value
     const porteAtualizado = document.getElementById('editarPorte').value
     const racaAtualizado = document.getElementById('editarRaca').value
-    const pesoAtualizado = document.getElementById('editarPeso').value+'.00'
+    const pesoAtualizado = document.getElementById('editarPeso').value
     // const fotoPerfil = document.getElementById('fotoPerfil').value
     // fotoPerfil = 'https://osegredo.com.br/wp-content/uploads/2023/09/1-81.jpg.webp'
     const novosDados = {
         nome: nomeAtualizado,
         nascimento: nascimentoAtualizado,
         peso:Number(pesoAtualizado),
-        img:'https://mega.ibxk.com.br/2016/03/03/03191820605602.jpg',
+        img:imgLink,
         dono_id:idPerfil,
       porte_id: Number(porteAtualizado),
       raca_id: Number(racaAtualizado)
@@ -236,13 +251,36 @@ editar.addEventListener('click', async ()=>{
             
       if (status) {
         alert('Dados Atualizados com sucesso')
-        // window.location.href = './perfil.html'
+        // telaEditar.classList.remove('hidden')
+        // telaNormal.classList.add('hidden')
+        // window.location.href = './pets.html'
+        window.location.reload();
+
       }
       else {
         alert('Não foi possivel atualizar seus dados')
-        // window.location.href = './perfil.html'
+        // window.location.href = './pets.html'
+        window.location.reload();
+
       }
     }
   
+})
+
+const btn_excluir = document.getElementById('btn_excluir')
+btn_excluir.addEventListener('click', async function () {
+  var confirmado = confirm(`Deseja deletar pet ${nomeAtualizado}?`);
+  if (confirmado) {
+    var certezaDeConfirmacao = confirm(`Tem certeza de que deseja deletar o pet ${nomeAtualizado}? essa alteração é irreversivel`);
+    if (certezaDeConfirmacao) {
+      deleteAnimal(idBixo)
+      window.location.reload();
+      alert('Pet deletado com sucesso');
+    } else {
+      alert('Operação cancelada');
+    }
+  } else {
+    alert('Operação cancelada');
+  }
 })
 }

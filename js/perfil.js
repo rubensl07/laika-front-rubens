@@ -25,11 +25,19 @@ const senha = document.getElementById('senhaUsuario')
 senha.value = perfilAntigo.senha
 const endereco = document.getElementById('cep')
 endereco.value = '06335040'
-
+const rua = document.getElementById('rua')
+rua.value=perfilAntigo.endereco.rua
+const bairro = document.getElementById('bairro')
+bairro.value=perfilAntigo.endereco.bairro
+const cidade = document.getElementById('cidade')
+cidade.value=perfilAntigo.endereco.cidade
+const estado = document.getElementById('estado')
+estado.value=perfilAntigo.endereco.estado
 const numero = document.getElementById('numeroDaCasa')
+numero.value=perfilAntigo.endereco.complemento
 // const fotoPerfil = document.getElementById('fotoPerfil')
 // fotoPerfil.value = perfilAntigo.img
-preencherCampos()
+// preencherCampos()
 
 const btn_excluir = document.getElementById('btn_excluir')
 btn_excluir.addEventListener('click', async function () {
@@ -74,52 +82,56 @@ const containerInformacoes = document.getElementById('containerCliente')
 let salvar=false
 editar.addEventListener('click', editarPerfil)
 function editarPerfil(){
-  
     editar.textContent='Salvar'
     nome.disabled = false;
     email.disabled = false;
     telefone.disabled = false;
     senha.disabled = false;
-    endereco.disabled = false;
+    endereco.disabled=false;
+    rua.disabled = false;
+    cidade.disabled = false;
+    estado.disabled = false;
+    bairro.disabled = false;
     numero.disabled = false;
   
      salvar=true
-    console.log(salvar);
     editar.removeEventListener('click', editarPerfil)
     editar.addEventListener('click', () => enviarParaBack(idPerfil))
-  
-    // ou use inputElement.removeAttribute("disabled");
-    // containerInformacoes.classList.add('hidden')
-    // containerEditando.classList.remove('hidden')
-  
 }
 
-// if (salvar) {
-//   console.log('entrei aqui');
   
   async function enviarParaBack(idPerfil) {
-console.log('to editando');
-
-preencherCampos()
+// const cep=await pegarCep(endereco)
     const nomeAtualizado = document.getElementById('nomeUsuario').value
     const emailAtualizado = document.getElementById('emailUsuario').value
     const telefoneAtualizado = document.getElementById('telefoneUsuario').value
     const senhaAtualizado = document.getElementById('senhaUsuario').value
-    const enderecoAtualizado = document.getElementById('cep').value
+    const ruaAtualizado = document.getElementById('rua').value
+    const bairroAtualizado = document.getElementById('bairro').value
+    const cidadeAtualizado = document.getElementById('cidade').value
+    const estadoAtualizado = document.getElementById('estado').value
+    // rua.value = cep.logradouro
+    // bairro.value = cep.bairro
+    // cidade.value = cep.localidade
+    // estado.value = cep.uf
     const numeroAtualizado = document.getElementById('numeroDaCasa').value
     // const fotoPerfil = document.getElementById('fotoPerfil').value
     // fotoPerfil = 'https://osegredo.com.br/wp-content/uploads/2023/09/1-81.jpg.webp'
     const novosDados = {
+      img:perfilAntigo.img,
       nome: nomeAtualizado,
       telefone: telefoneAtualizado,
       email: emailAtualizado,
       senha: senhaAtualizado,
       // img: fotoPerfil,
-//       endereco: [
-// bairro
+      endereco: {
+        rua:ruaAtualizado,
+        bairro:bairroAtualizado,
+        cidade:cidadeAtualizado,
+        estado:estadoAtualizado,
+        complemento:numeroAtualizado,
 
-//       ]
-      // endereco: numeroAtualizado,
+      }
     }
     if (novosDados) {
       let status = await putCliente(novosDados, idPerfil)
@@ -139,6 +151,10 @@ preencherCampos()
     telefone.disabled = false;
     senha.disabled = false;
     endereco.disabled = false;
+    rua.disabled = false;
+    cidade.disabled = false;
+    estado.disabled = false;
+    bairro.disabled = false;
     numero.disabled = false;
     salvar=false
   }

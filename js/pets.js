@@ -76,8 +76,6 @@ console.log('criarCard');
         console.log('entrei');
         abrirCardAnimal(dados.id)
     })
-    // const id = dados.id
-    //card.addEventListener('click', () => abrirdados(id));
 
     const iconeAnimal = document.createElement('img')
     iconeAnimal.src = dados.tipo.icon
@@ -97,9 +95,12 @@ console.log('criarCard');
     nomeanimal.classList.add('mt-4', 'font-bold')
 
     const racaAnimal = document.createElement('h2')
-
-    // dados.raca.nome
-    racaAnimal.textContent = 'leao'
+if (dados.raca) {
+    racaAnimal.textContent = dados.raca.nome
+    
+} else {
+    racaAnimal.textContent='SRD'
+}
     racaAnimal.classList.add('self-center')
 
     const linha = document.createElement('hr')
@@ -159,32 +160,37 @@ async function abrirCardAnimal(idBixo) {
     telaEditar.classList.remove('hidden')
     telaNormal.classList.add('hidden')
     console.log('oi porra');
-const editar = document.getElementById('btn_confirmar')
 
 const animalAntigo = await getAnimal(idBixo)
 console.log(animalAntigo);
 
 const textoMeusPets=document.getElementById('meusPets')
 textoMeusPets.classList.add('hidden')
-const iconEditar=document.getElementById('idconEditar')
+const iconEditar=document.getElementById('iconEditar')
 iconEditar.classList.remove('hidden')
 const nome = document.getElementById('nomeEditado')
 nome.classList.remove('hidden')
 nome.value = animalAntigo.nome
 
 const dataNascimento = document.getElementById('editarData')
-dataNascimento.value = animalAntigo.nascimento
+dataNascimento.value = animalAntigo.nascimento.substring(0, 10)
+console.log(dataNascimento.value);
+
 const porte = document.getElementById('editarPorte')
 porte.value = animalAntigo.porte.nome
 
 const raca = document.getElementById('editarRaca')
-raca.value = animalAntigo.raca.nome
+if (animalAntigo.raca.nome) {
+    raca.value = animalAntigo.raca.nome
+} else {
+    raca.value='SRD'
+}
 
 const peso = document.getElementById('editarPeso')
 peso.value = animalAntigo.peso
 
+const editar = document.getElementById('btn_confirmar')
 editar.addEventListener('click', editarPerfil(idBixo))
-
 }
  
   async function editarPerfil(idBixo) {

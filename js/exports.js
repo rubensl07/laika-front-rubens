@@ -70,7 +70,6 @@ export async function getCliente(id) {
     
     const response=await fetch(link)
     const data= await response.json()    
-    console.log(data.dados);
     return data.dados
 }
 /*export async function getClienteFiltro(filtro) {
@@ -102,9 +101,9 @@ export async function putCliente(cliente,id) {
         },
         body:JSON.stringify(cliente)
     }
-    const response=await fetch(url,options)
+    console.log(cliente);
+    const response=await fetch(link,options)
     console.log(response);
-    console.log(response.ok);
     return response.ok
 }
 export async function deleteCliente(id) {
@@ -170,7 +169,6 @@ export async function putAnimal(animal,id) {
         body:JSON.stringify(animal)
     }
     const response=await fetch(url,options)
-    console.log(response);
     return response.ok
     } catch (error) {
         console.log(error);
@@ -264,11 +262,8 @@ export async function deleteAgendamento(id) {
 
 export async function getTipos() {
     const link = `${url}/${versao}/laika/tipos`
-    console.log(link);
     const response=await fetch(link)
     const data=await response.json()
-    console.log(response);
-    console.log(data);
     
     return data.dados
 }
@@ -278,8 +273,30 @@ export async function getRaca(id) {
     
     const response=await fetch(link)
     const data= await response.json()    
-    console.log(link);
-    console.log(response);
-    console.log(data);
+
+    return data.dados
+}
+
+
+
+
+
+
+export async function getTipos() {
+        const link = `${url}/${versao}/laika/tipos`
+        const response=await fetch(link)
+        const data=await response.json()
+        
+        return data.dados
+
+
+}
+export async function getRaca(id) {
+    
+    const link =`${url}/${versao}/laika/racas/tipo/${id}`
+    
+    const response=await fetch(link)
+    const data= await response.json()    
+
     return data.dados
 }

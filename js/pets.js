@@ -45,7 +45,6 @@ async function cadastrarPet() {
             dono_id: idPerfil,
             porte_id: 1,
             raca_id: 1
-
         }
 
         try {
@@ -160,7 +159,7 @@ preencherContainer()
 async function abrirCardAnimal(idBixo) {
     telaEditar.classList.remove('hidden')
     telaNormal.classList.add('hidden')
-    console.log('oi porra');
+    
 
 const animalAntigo = await getAnimal(idBixo)
 console.log(animalAntigo);
@@ -182,7 +181,6 @@ porte.value = animalAntigo.porte.nome
 
 const categoriaId = animalAntigo.tipo.id;
 const subcategoriaSelect = document.getElementById('editarRaca');
-subcategoriaSelect.innerHTML = '<option value="">Error</option>';
 
 if (categoriaId) {
 
@@ -206,7 +204,7 @@ if (categoriaId) {
 
 const raca = document.getElementById('editarRaca')
 if (animalAntigo.raca) {
-    raca.value = animalAntigo.raca.nome
+    raca.value = animalAntigo.raca.id
 } else {
     raca.value='SRD'
 }
@@ -220,21 +218,21 @@ editar.addEventListener('click', async ()=>{
     const nascimentoAtualizado = document.getElementById('editarData').value
     const porteAtualizado = document.getElementById('editarPorte').value
     const racaAtualizado = document.getElementById('editarRaca').value
-    const pesoAtualizado = document.getElementById('editarPeso').value
+    const pesoAtualizado = document.getElementById('editarPeso').value+'.00'
     // const fotoPerfil = document.getElementById('fotoPerfil').value
     // fotoPerfil = 'https://osegredo.com.br/wp-content/uploads/2023/09/1-81.jpg.webp'
     const novosDados = {
-        dono:idPerfil,
-      nome: nomeAtualizado,
-      dataNascimento: nascimentoAtualizado,
-      porte: Number(porteAtualizado),
-      raca: Number(racaAtualizado),
-      peso:Number(pesoAtualizado),
-      img:'https://www.google.com/imgres?q=animal&imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F47547%2Fsquirrel-animal-cute-rodents-47547.jpeg%3Fcs%3Dsrgb%26dl%3Dpexels-pixabay-47547.jpg%26fm%3Djpg&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fpt-br%2Fprocurar%2Fanimal%2F&docid=JFNflu_2duXj1M&tbnid=SlfL-rBeyNr4KM&vet=12ahUKEwi9gZzpjcaGAxUaq5UCHYECGUwQM3oECGcQAA..i&w=2939&h=2583&hcb=2&ved=2ahUKEwi9gZzpjcaGAxUaq5UCHYECGUwQM3oECGcQAA'
+        nome: nomeAtualizado,
+        nascimento: nascimentoAtualizado,
+        peso:Number(pesoAtualizado),
+        img:'https://mega.ibxk.com.br/2016/03/03/03191820605602.jpg',
+        dono_id:idPerfil,
+      porte_id: Number(porteAtualizado),
+      raca_id: Number(racaAtualizado)
     }
+    console.log(novosDados);
     if (novosDados) {
       let status = await putAnimal(novosDados, idBixo)
-      console.log(novosDados);
             
       if (status) {
         alert('Dados Atualizados com sucesso')

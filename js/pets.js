@@ -10,6 +10,7 @@ if (!idPerfil) {
     window.location.href = '../index.html'
 }
 
+
 const btn_cadastrar = document.getElementById('btn_cadastrarPet')
 const telaCriar = document.getElementById('criarPet')
 const telaNormal = document.getElementById('telaNormal')
@@ -179,8 +180,32 @@ console.log(dataNascimento.value);
 const porte = document.getElementById('editarPorte')
 porte.value = animalAntigo.porte.nome
 
+const categoriaId = animalAntigo.tipo.id;
+const subcategoriaSelect = document.getElementById('editarRaca');
+subcategoriaSelect.innerHTML = '<option value="">Error</option>';
+
+if (categoriaId) {
+
+        const data=await getRaca(categoriaId)
+            data.forEach(subcategoria => {
+                const option = document.createElement('option');
+                option.value = subcategoria.id;
+                option.textContent = subcategoria.nome;
+                subcategoriaSelect.appendChild(option);
+            });
+
+}
+
+// for (var i = 0; i < selectElement.options.length; i++) {
+//     if (selectElement.options[i].value === subcategoria.nome) {
+//         selectElement.selectedIndex = i;
+//         break;
+//     }
+// }
+
+
 const raca = document.getElementById('editarRaca')
-if (animalAntigo.raca.nome) {
+if (animalAntigo.raca) {
     raca.value = animalAntigo.raca.nome
 } else {
     raca.value='SRD'
@@ -190,11 +215,7 @@ const peso = document.getElementById('editarPeso')
 peso.value = animalAntigo.peso
 
 const editar = document.getElementById('btn_confirmar')
-editar.addEventListener('click', editarPerfil(idBixo))
-}
- 
-  async function editarPerfil(idBixo) {
-
+editar.addEventListener('click', async ()=>{
     const nomeAtualizado = document.getElementById('nomeEditado').value
     const nascimentoAtualizado = document.getElementById('editarData').value
     const porteAtualizado = document.getElementById('editarPorte').value
@@ -203,11 +224,13 @@ editar.addEventListener('click', editarPerfil(idBixo))
     // const fotoPerfil = document.getElementById('fotoPerfil').value
     // fotoPerfil = 'https://osegredo.com.br/wp-content/uploads/2023/09/1-81.jpg.webp'
     const novosDados = {
+        dono:idPerfil,
       nome: nomeAtualizado,
       dataNascimento: nascimentoAtualizado,
-      porte: porteAtualizado,
-      raca: racaAtualizado,
-      peso:pesoAtualizado
+      porte: Number(porteAtualizado),
+      raca: Number(racaAtualizado),
+      peso:Number(pesoAtualizado),
+      img:'https://www.google.com/imgres?q=animal&imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F47547%2Fsquirrel-animal-cute-rodents-47547.jpeg%3Fcs%3Dsrgb%26dl%3Dpexels-pixabay-47547.jpg%26fm%3Djpg&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fpt-br%2Fprocurar%2Fanimal%2F&docid=JFNflu_2duXj1M&tbnid=SlfL-rBeyNr4KM&vet=12ahUKEwi9gZzpjcaGAxUaq5UCHYECGUwQM3oECGcQAA..i&w=2939&h=2583&hcb=2&ved=2ahUKEwi9gZzpjcaGAxUaq5UCHYECGUwQM3oECGcQAA'
     }
     if (novosDados) {
       let status = await putAnimal(novosDados, idBixo)
@@ -222,4 +245,6 @@ editar.addEventListener('click', editarPerfil(idBixo))
         // window.location.href = './perfil.html'
       }
     }
-  }
+  
+})
+}

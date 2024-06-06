@@ -31,7 +31,7 @@ export async function postProduto(Produto) {
         },
         body:JSON.stringify(Produto)
     }
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     return response.ok
 }
 
@@ -45,7 +45,7 @@ export async function putProduto(Produto,id) {
         body:JSON.stringify(Produto)
     }
     console.log(Produto);
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     console.log(response);
     console.log(response.ok);
     return response.ok
@@ -55,7 +55,7 @@ export async function deleteProduto(id) {
     const options={
         method:`DELETE`
     }
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     return response.ok
 }*/
 export async function getClientes() {
@@ -88,7 +88,7 @@ export async function postCliente(Cliente) {
         },
         body:JSON.stringify(Cliente)
     }
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     return response.ok
 }
 */
@@ -111,7 +111,7 @@ export async function deleteCliente(id) {
     const options={
         method:`DELETE`
     }
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     return response.ok
 }
 
@@ -159,7 +159,6 @@ export async function postAnimal(animal) {
 }
 
 export async function putAnimal(animal,id) {
-    try {
         const link=`${url}/${versao}/laika/animal/${id}`
     const options={
         method:`PUT`,
@@ -168,11 +167,10 @@ export async function putAnimal(animal,id) {
         },
         body:JSON.stringify(animal)
     }
-    const response=await fetch(url,options)
+    console.log(animal);
+    const response=await fetch(link,options)
     return response.ok
-    } catch (error) {
-        console.log(error);
-    }
+
     
 }
 export async function deleteAnimal(id) {
@@ -180,7 +178,7 @@ export async function deleteAnimal(id) {
     const options={
         method:`DELETE`
     }
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     return response.ok
 }
 
@@ -223,7 +221,7 @@ export async function postAgendamento(Agendamento) {
         },
         body:JSON.stringify(Agendamento)
     }
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     return response.ok
 }
 
@@ -236,7 +234,7 @@ export async function putAgendamento(Agendamento,id) {
         },
         body:JSON.stringify(Agendamento)
     }
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     return response.ok
 }
 export async function deleteAgendamento(id) {
@@ -244,7 +242,7 @@ export async function deleteAgendamento(id) {
     const options={
         method:`DELETE`
     }
-    const response=await fetch(url,options)
+    const response=await fetch(link,options)
     return response.ok
 }
 
@@ -257,25 +255,6 @@ export async function deleteAgendamento(id) {
 
 
 
-
-
-
-export async function getTipos() {
-    const link = `${url}/${versao}/laika/tipos`
-    const response=await fetch(link)
-    const data=await response.json()
-    
-    return data.dados
-}
-export async function getRaca(id) {
-    
-    const link =`${url}/${versao}/v1/laika/racas/tipo/${id}`
-    
-    const response=await fetch(link)
-    const data= await response.json()    
-
-    return data.dados
-}
 
 
 

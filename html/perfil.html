@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../js/perfil.js" defer type="module"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Laika</title>
+</head>
+
+<body class="flex flex-col bg-[#FFDD95] gap-3">
+    <header class="flex flex-col items-center py-2 w-full bg-[#FFD274] ">
+        <div class="flex gap-5 justify-between w-full text-xl  text-zinc-700 px-10 text-opacity-80">
+            <div class="flex gap-5 items-start my-auto">
+                <img src="../img/logo.png" alt="Company Logo" class="shrink-0 aspect-[1.06] fill-slate-500 w-[68px]" />
+                <input type="text"
+                    class="flex gap-5 self-stretch px-5 py-4 my-auto w-full text-xl bg-[#FFD274] border-[#2A00A8] border-solid border-[5px] rounded-[32px] text-zinc-700 text-opacity-80 "
+                    placeholder="O que seu pet precisa?">
+                <img src="../img/search.png" alt="Botao Pesquisar" />
+            </div>
+            <img src="../img/usuario.png" alt="User Avatar" class="shrink-0 rounded-full aspect-[1.04] w-[74px]" />
+        </div>
+        <hr class="self-stretch mt-4 w-full bg-black border border-black border-solid">
+        <nav class="flex gap-5 px-5 mt-3.5 text-2xl text-violet-900 w-[695px] ">
+            <a href="#" class="flex-auto">Agendar serviços</a>
+            <a href="#" class="flex-auto">Veterinário</a>
+            <a href="#" class="flex-auto">Produtos</a>
+        </nav>
+    </header>
+    <main class="flex items-center justify-center flex-row w-full gap-10 ">
+        <aside
+            class="gap-3 flex flex-col items-center self-stretch px-14 py-9 w-2/6 text-3xl text-center bg-[#FFD274] text-zinc-900">
+            <p class="font-extrabold">Matheus Noronha</p>
+            <hr class=" self-stretch bg-[#2A00A8] border-[#2A00A8] border-solid border-2">
+            <a href="./pedidos.html" class="mt-5">Meus pedidos</a>
+            <a href="./perfil.html" class="border-b-[#2A00A8] border-b-solid border-b-4 self-stretch">Dados da
+                conta</a>
+            <a href="./pets.html" class="">Meus Pets</a>
+            <a href="./agendamento.html" class="self-stretch">Seus agendamentos</a>
+            <a href="../index.html" class="mt-16 font-extrabold">VOLTAR</a>
+        </aside>
+        <div class="flex" id="containerCliente">
+            <div class="flex flex-col">
+                <div class="bg-white px-8 pt-4 pb-8 rounded-lg gap-5 flex flex-col items-center">
+                    <h1 class="font-bold text-3xl">Informações</h1>
+                    <div class="border-[#2A00A8] border-solid border-2 rounded-lg w-64">
+                        <h2 class="font-extrabold">Nome</h2>
+                        <input disabled type="text" class="w-full" id="nomeUsuario">
+                    </div>
+                    <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                        <h2 class="font-extrabold">Email</h2>
+                        <input disabled type="text" id="emailUsuario" class="w-full">
+                    </div>
+                    <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                        <h2 class="font-extrabold">senha</h2>
+                        <input disabled type="text" id="senhaUsuario" class="w-full">
+                    </div>
+                    <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                        <h2 class="font-extrabold">Telefone</h2>
+                        <input disabled type="tel" id="telefoneUsuario"  class="w-full">
+                    </div>
+                </div>
+                <button id="btn_confirmar"
+                    class="justify-center self-center px-11 py-4 mt-3 text-xl font-extrabold text-center bg-white rounded-xl border-solid border-[3px] border-violet-950 text-zinc-900">
+                    Editar Dados
+                </button>
+                <button id="btn_excluir"
+                    class="justify-center self-center px-11 py-4 mt-3 text-xl font-extrabold text-center bg-red-500 rounded-xl border-solid border-[3px] border-red-950 text-white">
+                    Excluir Conta
+                </button>
+            </div>
+            <div class="flex flex-col items-center">
+                <div class="bg-black border border-black border-solid h-[23%] w-1"></div>
+                <img src="../img/Person.png" alt="" class="self-center my-1 w-[21px]" />
+                <div class="bg-black border border-black border-solid h-[45%] w-1"></div>
+            </div>
+            <div class="ml-5 flex flex-col items-center">
+                <div class="bg-black border border-black border-solid h-[57%] w-1"></div>
+                <img src="../img/Location.png" alt="" class="self-center my-1 w-[21px]" />
+                <div class="bg-black border border-black border-solid h-[38%] w-1"></div>
+            </div>
+            <div class="bg-white px-8 pt-4 pb-8 rounded-lg gap-3 flex flex-col items-center">
+                <h1 class="font-bold text-3xl">Localização</h1>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg w-64">
+                    <h2 class="font-extrabold">CEP</h2>
+                    <input disabled class="w-full" id="cep" type="text">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold bg-slate-50 text-slate-700">Estado</h2>
+                    <input type="text" id="estado" disabled class="w-full disabled:text-slate-500">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold bg-slate-50 text-slate-700">Cidade</h2>
+                    <input type="text" id="cidade" disabled class="w-full disabled:text-slate-500">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold bg-slate-50 text-slate-700">Bairro</h2>
+                    <input type="text" id="bairro" disabled class="w-full disabled:text-slate-500">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold bg-slate-50 text-slate-700">Rua</h2>
+                    <input type="text" id="rua" disabled class="w-full disabled:text-slate-500">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold">N° da casa</h2>
+                    <input disabled class="w-full" id="numeroDaCasa" type="number" >
+                </div>
+            </div>
+        </div>
+        <!-- <div class="flex hidden" id="edicao">
+            <div class="bg-white px-8 pt-4 pb-8 rounded-lg gap-5 flex flex-col items-center">
+                <h1 class="font-bold text-3xl">Informações</h1>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg w-64">
+                    <h2 class="font-extrabold">Nome</h2>
+                    <input type="text" class="w-full" id="nomeUsuarioEditado">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold">Email</h2>
+                    <input type="text" id="emailUsuarioEditado" class="w-full">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold">Senha</h2>
+                    <input type="text" id="senhaUsuarioEditado" class="w-full">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold">Confirmar Senha</h2>
+                    <input type="password" id="confirmarSenhaUsuario" class="w-full">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold">Telefone</h2>
+                    <input type="password" id="telefoneUsuarioEditado"  class="w-full">
+                </div>
+                <div class="border-[#2A00A8] border-solid border-2 rounded-lg  w-64">
+                    <h2 class="font-extrabold">CEP</h2>
+                    <input type="text" id="cepUuarioEditado" class="w-full">
+                </div>
+            </div>
+            <button id="btn_editar"
+                class="justify-center self-center px-11 py-4 mt-3 text-xl font-extrabold text-center bg-white rounded-xl border-solid border-[3px] border-violet-950 text-zinc-900">
+                Editar Dados
+            </button>
+        </div> -->
+
+    </main>
+</body>
+
+</html>

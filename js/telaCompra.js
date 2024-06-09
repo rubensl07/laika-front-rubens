@@ -15,10 +15,8 @@ if(!idProduto){
      quantidadeEstoqueElement.textContent = quantidadeEstoque;
      if (quantidadeEstoque <= 5) {
          quantidadeEstoqueElement.style.backgroundColor = 'red';
-         quantidadeEstoqueElement.style.color = 'white';
      } else if (quantidadeEstoque <= 15) {
          quantidadeEstoqueElement.style.backgroundColor = 'orange';
-         quantidadeEstoqueElement.style.color = 'white';
      }
 
     console.log(info);

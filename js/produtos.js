@@ -1,8 +1,34 @@
-import { getProdutos, getProduto,  getCategorias} from './exports.js'
+import { getProdutos, getCategorias} from './exports.js'
 
 const containerProdutos=document.getElementById('containerProdutos')
-
 const listaCategorias = await getCategorias()
+
+const searchBar = document.getElementById('searchBar')
+
+let search = {
+    nome: null,
+    valorMin: null,
+    valorMax: null,
+    categoria: null
+}
+
+const classe = 'bg-cyan-500'
+document.getElementById('searchIcon').addEventListener('click',()=>{
+    search = {
+        nome: searchBar.value
+    }
+    const selecionado = document.querySelector(`.${classe}`)
+    if(selecionado){
+        selecionado.classList.remove(classe)
+    }
+    preencherContainer()
+})
+
+searchBar.addEventListener('keypress',(event)=>{
+    if(event.key==='Enter'){
+        document.getElementById('searchIcon').click()
+    }
+})
 
 listaCategorias.forEach(categoria => {
     const nome = document.createElement('p')
@@ -10,16 +36,18 @@ listaCategorias.forEach(categoria => {
     nome.textContent=categoria.nome
     nome.classList.add('cursor-pointer','h-full','px-10','py-6')
     nome.addEventListener('click',()=>{
-        // document.querySelector('bg-red-500').classList.remove('bg-red-500')
-        nome.classList.add('bg-red-500')
-        containerProdutos.innerHTML = ''
-        preencherContainer({
-            categoria:categoria.id
-        })
+        const selecionado = document.querySelector(`.${classe}`)
+        if(selecionado){
+            selecionado.classList.remove(classe)
+        }
+        nome.classList.add(classe)
+        search.nome = searchBar.value
+        search.categoria = categoria.id
+        preencherContainer()
     })
     document.getElementById('navCategorias').appendChild(nome)
 });
-function criarCard(produto) {
+function criarCardProduto(produto) {
 
     const card = document.createElement('div')
     card.classList.add('max-w-[229px]','rounded-xl','bg-white','p-4','text-black','flex','flex-col','justify-between')
@@ -54,11 +82,13 @@ function criarCard(produto) {
 
 
 
-async function preencherContainer(search) {
+
+async function preencherContainer() {
+    containerProdutos.innerHTML = ''
     const produtos = await getProdutos(search)
     produtos.forEach(produto => {
-        criarCard(produto)
+        criarCardProduto(produto)
     })
 }
-preencherContainer({})
+preencherContainer()
 

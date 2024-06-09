@@ -1,6 +1,6 @@
-const url = `https://laika-back.onrender.com`
+// const url = `https://laika-back.onrender.com`
 const versao = "v1"
-// const url = `http://localhost:8080/`
+const url = `http://localhost:8080`
 
 export async function getProdutos(filtro) {
     // const link = `${url}/${versao}/laika/produtos`
@@ -20,8 +20,7 @@ export async function getProdutos(filtro) {
     if(filtro.categoria){
         categoriaSearch=filtro.categoria
     }
-    const link = `${url}/${versao}/laika/produtos?nome=${nomeSearch}&valorMin=${valorMinSearch}&valorMax=${valorMaxSearch}&categoria=${categoriaSearch}`
-    console.log(link);
+    const link = `${url}/${versao}/laika/produtos?pesquisa=${nomeSearch}&valorMin=${valorMinSearch}&valorMax=${valorMaxSearch}&categoria=${categoriaSearch}`
     const response=await fetch(link)
     const data=await response.json()
     
@@ -33,58 +32,78 @@ export async function getProduto(id) {
     const data= await response.json()
     return data.dados
 }
-/*export async function getProdutoFiltro(filtro) {
-    const link =`http://localhost:8080/V2/ACMEProdutos/Produtos/filtro?nome=${filtro}`
-    const response=await fetch(link)
-    const data= await response.json()
-    return data.Produto
-}
+// export async function postProduto(Produto) {
+//     const link=`http://localhost:8080/V2/ACMEProdutos/Produto`
+//     const options={
+//         method:`POST`,
+//         headers:{
+//             `Content-type`:`application/json`
+//         },
+//         body:JSON.stringify(Produto)
+//     }
+//     const response=await fetch(link,options)
+//     return response.ok
+// }
 
-export async function postProduto(Produto) {
-    const link=`http://localhost:8080/V2/ACMEProdutos/Produto`
-    const options={
-        method:`POST`,
-        headers:{
-            `Content-type`:`application/json`
-        },
-        body:JSON.stringify(Produto)
-    }
-    const response=await fetch(link,options)
-    return response.ok
-}
-
-export async function putProduto(Produto,id) {
-    const link=`http://localhost:8080/V2/ACMEProdutos/Produto/${id}`
-    const options={
-        method:`PUT`,
-        headers:{
-            `Content-type`:`application/json`
-        },
-        body:JSON.stringify(Produto)
-    }
-    console.log(Produto);
-    const response=await fetch(link,options)
-    console.log(response);
-    console.log(response.ok);
-    return response.ok
-}
-export async function deleteProduto(id) {
-    const link=`http://localhost:8080/V2/ACMEProdutos/Produto/${id}`
-    const options={
-        method:`DELETE`
-    }
-    const response=await fetch(link,options)
-    return response.ok
-}*/
+// export async function putProduto(Produto,id) {
+//     const link=`http://localhost:8080/V2/ACMEProdutos/Produto/${id}`
+//     const options={
+//         method:`PUT`,
+//         headers:{
+//             `Content-type`:`application/json`
+//         },
+//         body:JSON.stringify(Produto)
+//     }
+//     console.log(Produto);
+//     const response=await fetch(link,options)
+//     console.log(response);
+//     console.log(response.ok);
+//     return response.ok
+// }
+// export async function deleteProduto(id) {
+//     const link=`http://localhost:8080/V2/ACMEProdutos/Produto/${id}`
+//     const options={
+//         method:`DELETE`
+//     }
+//     const response=await fetch(link,options)
+//     return response.ok
+// }
 export async function getClientes() {
     const link = `${url}/${versao}/laika/clientes`
     const response=await fetch(link)
     const data=await response.json()
     
-    return data.clientes
+    return data.dados
 }
 export async function getCliente(id) {
     const link =`${url}/${versao}/laika/cliente/${id}`
+    
+    const response=await fetch(link)
+    const data= await response.json()    
+    return data.dados
+}
+export async function getClientesResumo() {
+    const link = `${url}/${versao}/laika/clientes/resumo`
+    const response=await fetch(link)
+    const data=await response.json()
+    
+    return data.dados
+}
+export async function getClienteResumo(id) {
+    const link =`${url}/${versao}/laika/cliente/resumo/${id}`
+    
+    const response=await fetch(link)
+    const data= await response.json()    
+    return data.dados
+}
+export async function getClientesLogin() {
+    const link = `${url}/${versao}/laika/clientes/login`
+    const response=await fetch(link)
+    const data=await response.json()
+    return data.dados
+}
+export async function getClienteImg(id) {
+    const link =`${url}/${versao}/laika/cliente/img/${id}`
     
     const response=await fetch(link)
     const data= await response.json()    
@@ -119,9 +138,7 @@ export async function putCliente(cliente,id) {
         },
         body:JSON.stringify(cliente)
     }
-    console.log(cliente);
     const response=await fetch(link,options)
-    console.log(response);
     return response.ok
 }
 export async function deleteCliente(id) {
@@ -133,7 +150,21 @@ export async function deleteCliente(id) {
     return response.ok
 }
 
+export async function getFuncionarios() {
 
+    const link = `${url}/${versao}/laika/funcionarios`
+    const response=await fetch(link)
+    const data=await response.json()
+    
+    return data.dados
+
+}
+export async function getFuncionariosLogin() {
+    const link = `${url}/${versao}/laika/funcionarios/login`
+    const response=await fetch(link)
+    const data=await response.json()
+    return data.dados
+}
 
 
 
@@ -161,6 +192,13 @@ export async function getAnimal(id) {
     const data= await response.json()    
     
     return data.dados
+}
+export async function getAnimaisCliente(id){
+
+    const link =`${url}/${versao}/laika/animais/cliente/${id}`
+    const response = await fetch(link);
+    const dados = await response.json();
+    return dados.dados;
 }
 
 export async function postAnimal(animal) {
@@ -288,10 +326,18 @@ export async function getTipos() {
 
 
 }
-export async function getRaca(id) {
+export async function getRacas() {
+    
+    const link =`${url}/${versao}/laika/racas`
+    const response=await fetch(link)
+    const data= await response.json()    
+
+    return data.dados
+}
+
+export async function getRacaByTipo(id) {
     
     const link =`${url}/${versao}/laika/racas/tipo/${id}`
-    
     const response=await fetch(link)
     const data= await response.json()    
 
@@ -326,31 +372,21 @@ export async function getCategorias() {
 
 
 
-export async function getAllServicos() {
-    
-    const endpoint = 'https://laika-back.onrender.com/v1/laika/servicos';
-    const funcionariosApi = await fetch(endpoint);
+export async function getServicos() {
+    const link =`${url}/${versao}/laika/servicos`
+    const funcionariosApi = await fetch(link);
     const listFuncionarios = await funcionariosApi.json();
     return listFuncionarios.servicos;
 }
-
-export async function getAllAnimals(){
-
-    const endpoint = 'https://laika-back.onrender.com/v1/laika/animais';
-    const funcionariosApi = await fetch(endpoint);
-    const listFuncionarios = await funcionariosApi.json();
-    console.log(listFuncionarios.dados);
-    return listFuncionarios.dados;
+export async function getServico(id) {
+    const link =`${url}/${versao}/laika/servico/${id}`
+    const response=await fetch(link)
+    const data= await response.json()
+    return data.dados
 }
 
-export async function animalDataById(id){
 
-    const endpoint = `https://laika-back.onrender.com/v1/laika/animal/${id}`;
-    const funcionariosApi = await fetch(endpoint);
-    const listFuncionarios = await funcionariosApi.json();
-    console.log(listFuncionarios.dados);
-    return listFuncionarios.dados;
-}
+
 
 async function postarNovoCliente(cliente){
 
@@ -372,4 +408,122 @@ async function postarNovoCliente(cliente){
       } catch (error) {
         console.error('Erro ao enviar cliente: ', error);
       }
+}
+
+export async function verificarUsuarioExistente(id){
+    const info = await getClienteImg(id) 
+    if(info){
+        return info
+    } else {
+        return false
+    }
+}
+
+export const idUsuario = localStorage.getItem('idUsuarioLaika')
+
+
+export async function iniciarTelaCarregamento(telaCarregamento){
+    telaCarregamento.classList.add('h-full', 'w-full','top-0','left-0','fixed', 'bg-black', 'z-50');
+    telaCarregamento.innerHTML=`
+    <div class="loader-div">
+        <div class="content">
+            <img class="dog" src="../img/dog.gif" alt="">
+            <span class="loader">
+                <span></span>
+                <span></span>
+            </span>
+        </div>
+    </div>
+    <STYLE>
+    * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.loader-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #FFDD95;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader {
+    position: relative;
+    width: 10vw;
+    height: 5vw;
+    padding: 1.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vh;
+}
+
+.loader span {
+    position: absolute;
+    height: 0.5vw;
+    width: 0.5vw;
+    border-radius: 50%;
+    background-color: #06038F;
+}
+
+.loader span:nth-child(1) {
+    animation: loading-dotsA 1s infinite linear;
+}
+
+.loader span:nth-child(2) {
+    animation: loading-dotsB 1s infinite linear;
+}
+
+@keyframes loading-dotsA {
+    0% {
+        transform: none;
+    }
+    25% {
+        transform: translateX(2vw);
+    }
+    50% {
+        transform: none;
+    }
+    75% {
+        transform: translateY(2vw);
+    }
+    100% {
+        transform: none;
+    }
+}
+
+@keyframes loading-dotsB {
+    0% {
+        transform: none;
+    }
+    25% {
+        transform: translateX(-2vw);
+    }
+    50% {
+        transform: none;
+    }
+    75% {
+        transform: translateY(-2vw);
+    }
+    100% {
+        transform: none;
+    }
+}
+
+</STYLE>
+    `
+    document.body.append(telaCarregamento);
 }

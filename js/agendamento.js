@@ -1,11 +1,8 @@
 
 'use strict'
-import { getCliente, getClientes, deleteCliente, putCliente, getAnimal, deleteAnimal, getAnimais, postAnimal, putAnimal, getTipos, getRaca ,getPortes} from './exports.js'
+import { getCliente, idUsuario} from './exports.js'
 
-// const idPerfil = 2
-
-const idPerfil = localStorage.getItem('idUsuario')
-if (!idPerfil) {
+if (!idUsuario) {
   window.location.href = '../index.html'
 }
 
@@ -24,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     ];
     mesCalendario.textContent = nomesMeses[mm]; // Define o nome do mês
 
-    const cliente = await getCliente(idPerfil);
+    const cliente = await getCliente(idUsuario);
 
     const daysInMonth = new Date(yyyy, mm + 1, 0).getDate(); // +1 porque Date usa 0-11 para meses
     const calendar = document.getElementById('calendar');
@@ -84,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 });
 
 document.addEventListener("DOMContentLoaded", async function () {
-    const cliente=await getCliente(idPerfil)
+    const cliente=await getCliente(idUsuario)
 
     // { 2: 'Consulta Médica às 10h', 12: 'Reunião de Trabalho às 14h', 20: 'Dentista às 16h', 22: 'Ginástica às 18h' };
   // Verifica se há agendamentos
@@ -136,7 +133,7 @@ document.getElementById('close-button').addEventListener('click', () => {
 });
 })
 async function preencherContainer() {
-    const info = await getCliente(idPerfil)
+    const info = await getCliente(idUsuario)
     console.log(info);
     document.getElementById('nomeUser').textContent = info.nome
 }

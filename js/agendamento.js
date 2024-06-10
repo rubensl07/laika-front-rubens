@@ -9,17 +9,22 @@ if (!idUsuario) {
         window.location.href = './login.html'
     }
 }
-let agendamentos
+let info
 document.addEventListener('DOMContentLoaded', async () => {
     const telaCarregamento = document.createElement('div');
     iniciarTelaCarregamento(telaCarregamento)
-    agendamentos = await getAgendamentosCliente(idUsuario);
-    if (agendamentos) {
+    info = await getAgendamentosCliente(idUsuario)
+    if (info) {
         telaCarregamento.classList.add('hidden')
+        executarSite()
+    } else {
+        alert("Você não possui agendamentos :(")
+        window.history.back()
     }
-    executarSite()
 });
 async function executarSite() {
+    const agendamentos = info
+    console.log(agendamentos);
     document.getElementById('nomeUser').textContent = await getClienteNome(idUsuario)
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');

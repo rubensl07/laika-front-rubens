@@ -1,4 +1,4 @@
-import { getCliente, getAnimal, deleteAnimal, postAnimal, putAnimal, getTipos, getRacaByTipo ,getPortes, idUsuario, verificarUsuarioExistente, iniciarTelaCarregamento, getAnimaisCliente, getRacas, getClienteNome} from './exports.js'
+import { deleteAnimal, postAnimal, putAnimal, getTipos, getPortes, idUsuario, verificarUsuarioExistente, iniciarTelaCarregamento, getAnimaisCliente, getRacas, getClienteNome} from './exports.js'
 
 'use strict'
 
@@ -22,19 +22,19 @@ let nomeUsuario
 document.addEventListener('DOMContentLoaded', async () => {
     const telaCarregamento = document.createElement('div');
     iniciarTelaCarregamento(telaCarregamento)
-    nomeUsuario = (await getClienteNome(idUsuario)).nome
+    nomeUsuario = (await getClienteNome(idUsuario))
     listaPets = await getAnimaisCliente(idUsuario)
     listaTipos = await getTipos()
     listaRacas = await getRacas()
     listaPortes = await getPortes()
-    if(listaPets){
+    if(listaPets && listaTipos && listaRacas && listaPortes){
         telaCarregamento.classList.add('hidden')
+        executarSite()
     }
-    executarSite()
   });
 
 async function executarSite(){
-        document.getElementById('nomeUser').textContent = nomeUsuario
+    document.getElementById('nomeUser').textContent = nomeUsuario
     const telaCriar = document.getElementById('criarPet')
     const telaNormal = document.getElementById('telaNormal')
     const telaEditar = document.getElementById('editarPet')
@@ -121,6 +121,7 @@ async function executarSite(){
     
     
     function criarCard(dados) {
+        console.log(dados);
         const card = document.createElement('div')
         card.classList.add('flex', 'flex-col', 'items-center', 'cursor-pointer','bg-white', 'p-1.5', 'w-52', 'h-68', 'rounded-xl')
         card.addEventListener('click', () => {
@@ -259,19 +260,15 @@ async function executarSite(){
     
     const btn_excluir = document.getElementById('btn_excluir')
     btn_excluir.addEventListener('click', async function () {
-      var confirmado = confirm(`Deseja deletar pet ${nome.value}?`);
+      var confirmado = confirm(`Deseja deletar pet ${animalAntigo.nome}?`);
       if (confirmado) {
-        var certezaDeConfirmacao = confirm(`Tem certeza de que deseja deletar o pet ${nome.value}? essa alteração é irreversivel`);
-        if (certezaDeConfirmacao) {
-          deleteAnimal(idBixo)
-          window.location.reload();
-          alert('Pet deletado com sucesso');
-        } else {
-          alert('Operação cancelada');
-        }
-      } else {
-        alert('Operação cancelada');
-      }
+          const result = await deleteAnimal(animalAntigo.id)
+          if(result){
+              window.location.reload()
+          } else {
+            alert('Ocorreu um erro')
+          }
+      } 
     })
     }
 

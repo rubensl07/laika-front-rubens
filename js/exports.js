@@ -1,6 +1,6 @@
-const url = `https://laika-back.onrender.com`
+// const url = `https://laika-back.onrender.com`
 const versao = "v1"
-// const url = `http://localhost:8080`
+const url = `http://localhost:8080`
 
 export async function getProdutos(filtro) {
     // const link = `${url}/${versao}/laika/produtos`
@@ -45,21 +45,18 @@ export async function getProduto(id) {
 //     return response.ok
 // }
 
-// export async function putProduto(Produto,id) {
-//     const link=`http://localhost:8080/V2/ACMEProdutos/Produto/${id}`
-//     const options={
-//         method:`PUT`,
-//         headers:{
-//             `Content-type`:`application/json`
-//         },
-//         body:JSON.stringify(Produto)
-//     }
-//     console.log(Produto);
-//     const response=await fetch(link,options)
-//     console.log(response);
-//     console.log(response.ok);
-//     return response.ok
-// }
+export async function putProduto(Produto,id) {
+    const link=`${url}/${versao}/laika/produto/${id}`
+    const options={
+        method:`PUT`,
+        headers:{
+            'Content-type':'application/json'
+        },
+        body:JSON.stringify(Produto)
+    }
+    const response=await fetch(link,options)
+    return response.ok
+}
 // export async function deleteProduto(id) {
 //     const link=`http://localhost:8080/V2/ACMEProdutos/Produto/${id}`
 //     const options={
@@ -287,7 +284,6 @@ export async function getAgendamentosCliente(id) {
     
     const response=await fetch(link)
     const data= await response.json()    
-    
     return data.dados
 }
 

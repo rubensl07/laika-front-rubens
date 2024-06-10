@@ -161,6 +161,6 @@ document.getElementById('goToProdutos').addEventListener('click',()=>{
 document.getElementById('goToServicos').addEventListener('click',()=>{
     document.getElementById('servicosField').scrollIntoView({ behavior: 'smooth' });
 })
-document.getElementById('goToVeterinarios').addEventListener('click',()=>{
+document.getElementById('goToFuncionarios').addEventListener('click',()=>{
     document.getElementById('funcionariosField').scrollIntoView({ behavior: 'smooth' });
 })

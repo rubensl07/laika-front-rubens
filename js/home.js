@@ -127,7 +127,6 @@ function executarSite(){
     funcionarios.push(f4)
 
     function criarCardFuncionario(dados) {
-        console.log(dados);
         const card = document.createElement('div')
         card.classList.add('gap-5','bg-white', 'flex', 'flex-col', 'items-center', 'rounded-xl', 'h-full', 'justify-center')
 

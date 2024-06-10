@@ -109,6 +109,13 @@ export async function getClienteImg(id) {
     const data= await response.json()    
     return data.dados
 }
+export async function getClienteNome(id) {
+    const link =`${url}/${versao}/laika/cliente/nome/${id}`
+    
+    const response=await fetch(link)
+    const data= await response.json()    
+    return data.dados.nome
+}
 /*export async function getClienteFiltro(filtro) {
     const link =`http://localhost:8080/V2/ACMEClientes/Clientes/filtro?nome=${filtro}`
     const response=await fetch(link)
@@ -116,27 +123,29 @@ export async function getClienteImg(id) {
     return data.Cliente
 }
 
-export async function postCliente(Cliente) {
-    const link=`http://localhost:8080/V2/ACMEClientes/Cliente`
+*/
+
+export async function postCliente(dados) {
+    const link=`${url}/${versao}/laika/cliente`
     const options={
         method:`POST`,
         headers:{
-            `Content-type`:`application/json`
+            'Content-type':'application/json'
         },
-        body:JSON.stringify(Cliente)
+        body:JSON.stringify(dados)
     }
     const response=await fetch(link,options)
     return response.ok
 }
-*/
-export async function putCliente(cliente,id) {
+
+export async function putCliente(dados,id) {
     const link=`${url}/${versao}/laika/cliente/${id}`
     const options={
         method:`PUT`,
         headers:{
             'Content-type':'application/json'
         },
-        body:JSON.stringify(cliente)
+        body:JSON.stringify(dados)
     }
     const response=await fetch(link,options)
     return response.ok
@@ -157,8 +166,15 @@ export async function getFuncionarios() {
     const data=await response.json()
     
     return data.dados
-
 }
+export async function getFuncionario(id) {
+    const link =`${url}/${versao}/laika/funcionario/${id}`
+    
+    const response=await fetch(link)
+    const data= await response.json()    
+    return data.dados
+}
+
 export async function getFuncionariosLogin() {
     const link = `${url}/${versao}/laika/funcionarios/login`
     const response=await fetch(link)
@@ -223,7 +239,6 @@ export async function putAnimal(animal,id) {
         },
         body:JSON.stringify(animal)
     }
-    console.log(animal);
     const response=await fetch(link,options)
     return response.ok
 
@@ -252,7 +267,7 @@ export async function deleteAnimal(id) {
 
 
 
-export async function getaAgendamentos() {
+export async function getAgendamentos() {
     const link = `${url}/${versao}/laika/agendamentos`
     const response=await fetch(link)
     const data=await response.json()
@@ -261,6 +276,14 @@ export async function getaAgendamentos() {
 }
 export async function getAgendamento(id) {
     const link =`${url}/${versao}/laika/agendamento/${id}`
+    
+    const response=await fetch(link)
+    const data= await response.json()    
+    
+    return data.dados
+}
+export async function getAgendamentosCliente(id) {
+    const link =`${url}/${versao}/laika/agendamentos/cliente/${id}`
     
     const response=await fetch(link)
     const data= await response.json()    

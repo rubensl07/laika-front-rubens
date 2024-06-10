@@ -1,4 +1,4 @@
-import { getProdutos, getServico, iniciarTelaCarregamento} from './exports.js'
+import { getFuncionario, getProdutos, getServico, iniciarTelaCarregamento} from './exports.js'
 
 //TELA DE CARREGAMENTO. AGUARDA A REQUISIÇÃO DO BANCO DE DADOS SER CONCLUÍDA
 
@@ -7,6 +7,11 @@ let produtos
 let hospedagem
 let babySitter
 let creche
+let f1
+let f2
+let f3
+let f4
+
 
 document.addEventListener('DOMContentLoaded', async () => {
     const telaCarregamento = document.createElement('div');
@@ -15,7 +20,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     hospedagem = await getServico(8)
     babySitter = await getServico(7)
     creche = await getServico(6)
-    if(produtos && hospedagem && babySitter && creche){
+    f1 = await getFuncionario(25)
+    f2 = await getFuncionario(1)
+    f3 = await getFuncionario(24)
+    f4 = await getFuncionario(23)
+    if(produtos && hospedagem && babySitter && creche && f1 && f2 && f3 && f4){
         telaCarregamento.classList.add('hidden')
         executarSite()
     }
@@ -63,13 +72,10 @@ function executarSite(){
             window.location.href='./telaCompra.html?id='+info.id
         })
     }
-    
     for (let index = 0; index < 4; index++) {
-        console.log(produtos);
         criarCardProduto(produtos[index])
     }
-    
-    
+      
     
     function criarCardServico(dados) {
         const info = dados.dados
@@ -96,7 +102,7 @@ function executarSite(){
         botao.style.borderStyle = 'solid';
         botao.classList.add('bg-[#CFD4E5]', 'hover:bg-[#a5a9b4]', 'duration-300', 'rounded-md', 'text-[#2A00A8]', 'text-2xl', 'hover:text-[#3800ee]', 'p-4')
         botao.addEventListener('click',()=>{
-            window.location.href='./telaServico.html?id='+info.id
+            window.location.href='./telaAgendamento.html?id='+info.id
         })
     
         top.replaceChildren(nome,img)
@@ -104,7 +110,7 @@ function executarSite(){
         document.getElementById('containerServicos').appendChild(card)
     
     }
-    
+
     const servicos = []
     servicos.push({dados: hospedagem, img:"../img/servicos/Pillow.png"})
     servicos.push({dados: babySitter, img:"../img/servicos/Dog House.png"})
@@ -114,6 +120,39 @@ function executarSite(){
         criarCardServico(servicos[index])    
     }
     
+    const funcionarios = []
+    funcionarios.push(f1)
+    funcionarios.push(f2)
+    funcionarios.push(f3)
+    funcionarios.push(f4)
+
+    function criarCardFuncionario(dados) {
+        console.log(dados);
+        const card = document.createElement('div')
+        card.classList.add('gap-5','bg-white', 'flex', 'flex-col', 'items-center', 'rounded-xl', 'h-full', 'justify-center')
+
+        const foto = document.createElement('img')
+        foto.src = dados.img
+        foto.classList.add('h-1/2','aspect-square','object-cover','rounded-full')
+        const nome = document.createElement('h2')
+        nome.textContent=dados.nome
+        nome.classList.add('font-bold','text-[#2A00A8]','text-3xl')
+
+        let stringCargos = ''
+        const listaCargos = dados.cargos
+        listaCargos.forEach(element => {
+            stringCargos += element.nome+', '
+        });
+        const cargos = document.createElement('h4')
+        cargos.textContent=stringCargos.slice(0,stringCargos.length-2)
+        cargos.classList.add('text-center','text-xl','font-semibold')
+    
+        card.replaceChildren(nome,foto,cargos)
+        document.getElementById('containerFuncionarios').appendChild(card)
+    }
+    funcionarios.forEach(element => {
+        criarCardFuncionario(element)     
+    });
 }
 
 document.getElementById('goToProdutos').addEventListener('click',()=>{
@@ -123,5 +162,5 @@ document.getElementById('goToServicos').addEventListener('click',()=>{
     document.getElementById('servicosField').scrollIntoView({ behavior: 'smooth' });
 })
 document.getElementById('goToVeterinarios').addEventListener('click',()=>{
-    document.getElementById('veterinariosField').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('funcionariosField').scrollIntoView({ behavior: 'smooth' });
 })

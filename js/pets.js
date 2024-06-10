@@ -1,4 +1,4 @@
-import { getCliente, getAnimal, deleteAnimal, postAnimal, putAnimal, getTipos, getRacaByTipo ,getPortes, idUsuario, verificarUsuarioExistente, iniciarTelaCarregamento, getAnimaisCliente, getRacas} from './exports.js'
+import { getCliente, getAnimal, deleteAnimal, postAnimal, putAnimal, getTipos, getRacaByTipo ,getPortes, idUsuario, verificarUsuarioExistente, iniciarTelaCarregamento, getAnimaisCliente, getRacas, getClienteNome} from './exports.js'
 
 'use strict'
 
@@ -12,14 +12,17 @@ if (!idUsuario) {
     }
 }
 
+
 let listaPets
 let listaTipos
 let listaRacas
 let listaPortes
+let nomeUsuario
 
 document.addEventListener('DOMContentLoaded', async () => {
     const telaCarregamento = document.createElement('div');
     iniciarTelaCarregamento(telaCarregamento)
+    nomeUsuario = (await getClienteNome(idUsuario)).nome
     listaPets = await getAnimaisCliente(idUsuario)
     listaTipos = await getTipos()
     listaRacas = await getRacas()
@@ -31,8 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
 async function executarSite(){
-            // document.getElementById('nomeUser').textContent = info.nome
-
+        document.getElementById('nomeUser').textContent = nomeUsuario
     const telaCriar = document.getElementById('criarPet')
     const telaNormal = document.getElementById('telaNormal')
     const telaEditar = document.getElementById('editarPet')
@@ -48,6 +50,9 @@ async function executarSite(){
         option.textContent = categoria.nome;
         document.getElementById('novoPorte').appendChild(option);
 });
+
+    // NOVO
+
     listaTipos.forEach(tipo => {
         const option = document.createElement('option');
         option.value = tipo.id;
@@ -62,9 +67,13 @@ async function executarSite(){
     if (tipoId>0) {
         const listaRacasAnimal= filtrarRacas(tipoId)
             listaRacasAnimal.forEach(raca => {
-            const option = document.createElement('option');
-            option.value = raca.id;
-            option.textContent = raca.nome;
+                const option = document.createElement('option');
+                option.value = raca.id;
+                if(!raca.srd){
+                    option.textContent = raca.nome;
+                } else {
+                    option.textContent = "Sem raça"
+                }
             document.getElementById('novaRaca').appendChild(option);
         });
     }
@@ -98,8 +107,7 @@ async function executarSite(){
             try {
                 const retornoInsert= await postAnimal(animal)
                 if (retornoInsert) {
-                    telaCriar.classList.add('hidden');
-                    telaNormal.classList.remove('hidden')
+                    window.location.reload()
                 } else {
                     alert('Não foi possivel cadastrar novo pet, verifique as informações')
                 }
@@ -114,7 +122,7 @@ async function executarSite(){
     
     function criarCard(dados) {
         const card = document.createElement('div')
-        card.classList.add('flex', 'flex-col', 'items-center', 'bg-white', 'p-1.5', 'w-52', 'h-68', 'rounded-xl')
+        card.classList.add('flex', 'flex-col', 'items-center', 'cursor-pointer','bg-white', 'p-1.5', 'w-52', 'h-68', 'rounded-xl')
         card.addEventListener('click', () => {
             abrirCardAnimal(dados)
         })
@@ -166,10 +174,8 @@ async function executarSite(){
         card.replaceChildren(iconeAnimal, ImagemAnimal, nomeAnimal, racaAnimal, linha, divIdadePeso)
         telaNormal.appendChild(card)
     }
-        const container = document.querySelector('main')
         listaPets.forEach(dado => {
             criarCard(dado)
-            container.appendChild(telaNormal)
         });
     
     async function abrirCardAnimal(animalAntigo) {
@@ -213,7 +219,7 @@ async function executarSite(){
     if (animalAntigo.raca) {
         document.getElementById('editarRaca').value = animalAntigo.raca.id
     } else {
-        document.getElementById('editarRaca').value='0'
+        document.getElementById('editarRaca').value=0
     }
     
     const peso = document.getElementById('editarPeso')
@@ -240,7 +246,6 @@ async function executarSite(){
           porte_id: Number(porteAtualizado),
           raca_id: Number(racaAtualizado)
         }
-        console.log(novosDados);
         if (novosDados) {
           let status = await putAnimal(novosDados, animalAntigo.id)
           if (status) {

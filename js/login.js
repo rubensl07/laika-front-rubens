@@ -42,7 +42,7 @@ document.getElementById('logar').addEventListener('click', async function(){
 
         if(client.email == email && client.senha == senha){
             localStorage.setItem('idUsuarioLaika', client.id)
-            window.location.href = '../index.html'
+            window.location.href = './home.html'
         } else {    
             allFuncionarios.forEach(funcionario => {
                 if(funcionario.email == email && funcionario.senha == senha){
@@ -54,17 +54,12 @@ document.getElementById('logar').addEventListener('click', async function(){
                         alert('ADM')
                     }
                 } else {
-                    exibirMensagemDeErro()
+                    document.getElementById('errorMessage').classList.remove('hidden')
+                    setTimeout(function() {
+                        document.getElementById('errorMessage').classList.add('hidden');
+                    }, 3000);
                 }
             });
         }
     });
 })
-
-function exibirMensagemDeErro(){
-    document.getElementById('errorMessage').classList.remove('hidden')
-    setTimeout(function() {
-        document.getElementById('errorMessage').classList.add('hidden');
-    }, 3000);
-}
-

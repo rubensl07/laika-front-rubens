@@ -55,11 +55,8 @@ async function executarSite(){
   }
   
   document.getElementById('btn_logout').addEventListener('click', async function () {
-    var confirmado = confirm(`Deseja fazer logout?`);
-    if (confirmado) {
       localStorage.removeItem('idUsuarioLaika')
       window.location.reload();
-    }
   })
   
   async function pegarCep(endereco) {

@@ -60,6 +60,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                     errorSenha.classList.add('hidden')
                 }, 3000);
             } 
+            infoClientes.forEach(element => {
+                if(element.email == email){
+                    const errorEmail = document.getElementById('errorEmail')
+                    errorEmail.classList.remove('hidden')
+                    validate1 = false
+                    setTimeout(function() {
+                        errorEmail.classList.add('hidden');
+                    }, 3000);
+                    alert("Já existe um usuário cadastrado com esse e-mail")
+                }
+            });
             if(validate1){
                 let nomeCompleto = nome
                 if(sobrenome != ''){
